@@ -43,6 +43,7 @@ alias mkdir="mkdir -pv" \
     pacman="sudo pacman.ryan" \
     startx="startx.ryan" \
     xinit="xinit.ryan" \
+    pass="PASSWORD_STORE_DIR=. /usr/bin/pass" \
     ssh="ssh.ryan" \
     mutt="mutt.ryan" \
     calcurse="calcurse.ryan" \
