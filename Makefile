@@ -1,6 +1,6 @@
 
 DEST=dist/
-VER=0.0.17-2
+VER=0.0.17-4
 #TEMP=/tmp/
 TEMP=/home/ryan/
 
@@ -11,7 +11,8 @@ build: PKGBUILD
 	@gpg -b --yes base.ryan-$(VER)-any.pkg.tar.zst
 
 dist:
-	@rm -r ${DEST}/*
+	-@mkdir -p ${DIST}/
+	-@rm -r ${DEST}/*
 	@mv base.ryan-${VER}-any.pkg.tar.zst{,.sig} ${DEST}/
 	@repo-add.ryan -v -p -s ${DEST}/core.ryan.db.tar.zst ${DEST}/base.ryan-${VER}-any.pkg.tar.zst
 
