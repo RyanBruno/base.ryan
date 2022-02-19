@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs gitunpack.sh
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/gitunpack.sh
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target

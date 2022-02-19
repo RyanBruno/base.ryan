@@ -1,0 +1,5 @@
+#!/bin/sh
+
+[[ -e ~/.ipfs ]] || /usr/bin/ipfs init
+
+/usr/bin/ipfs $*

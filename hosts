@@ -1,0 +1,11 @@
+# Static table lookup for hostnames.
+# See hosts(5) for details.
+127.0.0.1    origin
+
+10.0.1.1    blackbird
+10.0.1.2    bendybird
+10.0.1.3    mobilebird
+10.0.1.4    firebird
+10.0.1.5    ironbird
+
+127.0.0.1   catering.themeatwagonbbq.com

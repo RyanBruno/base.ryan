@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+# Screen layout config
+# Only link the relevant script
+[ -f "$HOME/.config/arandr/$HOSTNAME.sh" ] && /usr/bin/bash -c 'sleep 2 && ~/.config/arandr/$HOSTNAME.sh' &
+
+xhost +
+
+# Status Bar
+while true; do
+    BAT=""
+    [ -e /sys/class/power_supply/*/capacity ] && BAT="Bat: $(cat /sys/class/power_supply/*/capacity) |"
+    xsetroot -name "$BAT $( date +"%F %R" )"
+    sleep 1m
+done &
+
+# Wallpaper
+/usr/bin/bash -c 'sleep 3 && xwallpaper --zoom ~/.config/wallpaper/default' &
+
+# Composite Mgmr
+xcompmgr -c &
+
+#exec /usr/bin/i3
+exec /usr/bin/dwm.ryan

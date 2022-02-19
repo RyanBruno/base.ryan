@@ -1,0 +1,42 @@
+#mail_home=/srv/mail/%Lu
+mail_location=maildir:~/Maildir
+protocols = imap pop3 lmtp submission
+
+## this is sometimes needed
+#first_valid_uid = uid-of-vmail-user
+
+auth_username_format=%n
+# if you want to use system users
+passdb {
+    driver = pam
+}
+
+userdb {
+    driver = passwd-file
+    args = username_format=%n /etc/passwd
+    override_fields = home=/home/%n
+}
+
+service lmtp {
+   inet_listener lmtp {
+      address = 127.0.0.1 ::1
+      port = 24
+   }
+}
+
+submission_relay_host = 127.0.0.1
+submission_relay_port = 25
+submission_relay_ssl = no
+
+ssl=yes
+ssl_cert=</srv/certs/live/rbruno.com/fullchain.pem
+ssl_key=</srv/certs/live/rbruno.com/privkey.pem
+
+# if you are using v2.3.0-v2.3.2.1 (or want to support non-ECC DH algorithms)
+# since v2.3.3 this setting has been made optional.
+#ssl_dh=</path/to/dh.pem
+
+namespace {
+    inbox = yes
+    separator = /
+}

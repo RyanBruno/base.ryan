@@ -1,0 +1,10 @@
+[Unit]
+Description=InterPlanetary File System (IPFS) daemon
+
+[Service]
+User=root
+ExecStart=/usr/bin/ipfs.ryan daemon
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,41 @@
+# Maintainer: Ryan Bruno <ryan@rbruno.com>
+pkgname=dwm.ryan
+pkgver=6.2
+pkgrel=2
+pkgdesc="Ryans configured dwm"
+arch=('i686' 'x86_64')
+url='https://github.com/RyanBruno/TheRepository'
+license=('MIT')
+options=(zipman)
+depends=('libx11' 'libxinerama' 'libxft' 'freetype2' 'st.ryan' 'dmenu')
+install=dwm.install
+source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
+    http://dwm.suckless.org/patches/fullgaps/dwm-fullgaps-$pkgver.diff
+	config.h
+	dwm.desktop)
+sha256sums=('97902e2e007aaeaa3c6e3bed1f81785b817b7413947f1db1d3b62b8da4cd110e'
+            '3c59104f4b23b8ec3c31ff639712dc1214bd5e3a487f7af039268373eb9e0b2d'
+            'SKIP'
+            'bc36426772e1471d6dd8c8aed91f288e16949e3463a9933fee6390ee0ccd3f81')
+#validpgpkeys=('915EBB9C9889E4AEB983CD96F15F942AA25D5A6A')
+
+prepare() {
+  cd "$srcdir/dwm-$pkgver"
+  cp "$srcdir/config.h" config.h
+  patch -p1 < ../dwm-fullgaps-$pkgver.diff
+}
+
+build() {
+  cd "$srcdir/dwm-$pkgver"
+  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+  cd "$srcdir/dwm-$pkgver"
+  make PREFIX=/usr DESTDIR="$pkgdir" install
+  mv $pkgdir/usr/bin/dwm $pkgdir/usr/bin/dwm.ryan
+  mv $pkgdir/usr/share/man/man1/dwm.1 $pkgdir/usr/share/man/man1/dwm.ryan.1
+  install -m644 -D LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -m644 -D README "$pkgdir/usr/share/doc/$pkgname/README"
+  install -m644 -D "$srcdir/dwm.desktop" "$pkgdir/usr/share/xsessions/dwm.ryan.desktop"
+}

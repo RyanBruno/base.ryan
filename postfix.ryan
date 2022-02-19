@@ -1,0 +1,9 @@
+#!/bin/sh
+
+[ -f /root/.forward ] || echo '*.ryan packages send emails to root@localhost.
+To forward messages to your user run:
+echo $USER | sudo bash -c "cat > /root/.forward"'
+postalias /etc/postfix.ryan/aliases
+postmap /etc/postfix.ryan/virtual
+
+postfix -c /etc/postfix.ryan $*

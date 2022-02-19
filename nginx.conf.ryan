@@ -1,0 +1,117 @@
+
+user http;
+worker_processes auto;
+worker_cpu_affinity auto;
+
+events {
+	multi_accept on;
+	worker_connections 1024;
+}
+
+http {
+	server {
+		#server_name	*;
+        listen		    80;
+        listen          443 ssl;
+
+        ssl_certificate     /srv/certs/live/rbruno.com/fullchain.pem;
+        ssl_certificate_key /srv/certs/live/rbruno.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        location ~ /archlinux/.*\.(db|sig|files)$ {
+            #rewrite ^/archlinux/(.*) /$1    break;
+            proxy_pass http://mirrors$request_uri;
+        }
+
+        location ~ /archlinux/.*\.tar\.(xz|zst)$ {
+            #rewrite ^/archlinux/(.*) /$1    break;
+            try_files $uri @pkg_mirror;
+        }
+
+        location @pkg_mirror {
+            proxy_store    /srv/archlinux$request_uri;
+            proxy_redirect off;
+            proxy_store_access  user:rw group:rw all:r;
+            proxy_next_upstream error timeout http_404;
+            proxy_pass          http://mirrors$request_uri;
+        }
+
+        location /pkg {
+            rewrite ^/pkg/(.*) /$1    break;
+            root /var/lib/git/Public.git/pkg/dist;
+        }
+
+        location /ipfs {
+            proxy_set_header Host $host;
+            proxy_pass  http://localhost:8080/ipfs;
+        }
+
+        location /express {
+            proxy_pass  http://localhost:3000;
+        }
+
+        location /assets/MeatWagonBbq-Catering {
+            rewrite ^/assets/MeatWagonBbq-Catering(.*) /$1    break;
+            root /srv/MeatWagonBbq-Catering/assets;
+            #add_header Surrogate-Control "no-cache";
+            #add_header Cache-Control "no-cache";
+        }
+
+        location / {
+            root /srv/http;
+            add_header Surrogate-Control "no-cache";
+            add_header Cache-Control "no-cache";
+	    }
+	}
+
+    server {
+        listen          80;
+        server_name	    catering.themeatwagonbbq.com;
+        return          301 https://catering.themeatwagonbbq.com$request_uri;
+    }
+
+	server {
+		server_name	    catering.themeatwagonbbq.com;
+        listen          443 ssl;
+
+        ssl_certificate     /srv/certs/live/catering.themeatwagonbbq.com/fullchain.pem;
+        ssl_certificate_key /srv/certs/live/catering.themeatwagonbbq.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        location /ipfs {
+            proxy_set_header Host $host;
+            proxy_pass  http://localhost:8080/ipfs;
+        }
+
+        location /express {
+            proxy_pass  http://localhost:3000;
+        }
+
+        location /assets/MeatWagonBbq-Catering {
+            rewrite ^/assets/MeatWagonBbq-Catering(.*) /$1    break;
+            root /srv/MeatWagonBbq-Catering/assets;
+            #add_header Surrogate-Control "no-cache";
+            #add_header Cache-Control "no-cache";
+        }
+
+        location / {
+            root /usr/lib/MeatWagonBbq-Catering/http/;
+            rewrite ^/$ /MeatWagonBbq-Catering.html break;
+            add_header Surrogate-Control "no-cache";
+            add_header Cache-Control "no-cache";
+	    }
+	}
+
+    upstream mirrors {
+        server 127.0.0.1:8001;
+    }
+
+    server {
+        listen  8001;
+        location /archlinux/ {
+            proxy_pass http://mirror.rackspace.com/archlinux/;
+        }
+    }
+}

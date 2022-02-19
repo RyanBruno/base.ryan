@@ -1,0 +1,8 @@
+[Unit]
+Description=Runs gitunpack.sh every 15mins
+
+[Timer]
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=timers.target
