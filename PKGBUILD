@@ -6,6 +6,7 @@ pkgdesc=''
 arch=('any')
 url='https://github.com/RyanBruno/TheRepository'
 license=('GPL')
+install='mariadb.install'
 source=(pacman.ryan pacman.conf.ryan
     ryan-trusted ryan.gpg
     nginx.conf.ryan nginx.ryan.service nginx.ryan
@@ -256,8 +257,5 @@ package() {
     #ln -s /usr/lib/systemd/system/ipfs.ryan.service $pkgdir/usr/lib/systemd/system/multi-user.target.wants/ipfs.ryan.service
 
     ln -s /usr/lib/systemd/system/mariadb.service $pkgdir/usr/lib/systemd/system/multi-user.target.wants/mariadb.service
-
-    mariadb-install-db --user=mysql --basedir=/usr --datadir=$pkgdir/var/lib/mysql
-    ### TODO any files in /var/lib/mysql need to not be overwritten on upgrade
 
 }
