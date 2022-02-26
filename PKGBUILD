@@ -1,7 +1,7 @@
 # Maintainer: Ryan Bruno <ryan@rbruno.com>
 pkgname=base.ryan
-pkgver=0.0.17
-pkgrel=4
+pkgver=0.0.18
+pkgrel=1
 pkgdesc=''
 arch=('any')
 url='https://github.com/RyanBruno/TheRepository'
@@ -89,6 +89,8 @@ depends=(
     'firefox'
     ## Finance
     'gnucash'
+    # Gotta have a SQL Server
+    'mariadb'
     # Not Orginized
     'syncthing'
     'tree'
@@ -253,8 +255,9 @@ package() {
     ln -s /usr/lib/systemd/system/dovecot.ryan.service $pkgdir/usr/lib/systemd/system/multi-user.target.wants/dovecot.ryan.service
     #ln -s /usr/lib/systemd/system/ipfs.ryan.service $pkgdir/usr/lib/systemd/system/multi-user.target.wants/ipfs.ryan.service
 
-    ## TODO
-    #npm install -g --prefix "${pkgdir}/usr" ${_npmDeps}
-    #chown -R root:root "${pkgdir}"
+    ln -s /usr/lib/systemd/system/mariadb.service $pkgdir/usr/lib/systemd/system/multi-user.target.wants/mariadb.service
+
+    mariadb-install-db --user=mysql --basedir=/usr --datadir=$pkgdir/var/lib/mysql
+    ### TODO any files in /var/lib/mysql need to not be overwritten on upgrade
 
 }
