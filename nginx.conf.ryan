@@ -13,6 +13,14 @@ http {
 		server_name     cateradmin.rbruno.com;
         listen		    80;
         root            /usr/lib/caterbuddy-admin/frontend;
+
+        location /css {
+            default_type text/css;
+        }
+
+        location /api {
+            proxy_pass http://localhost:5000;
+        }
     }
 
 	server {
