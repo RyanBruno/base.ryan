@@ -1,7 +1,7 @@
 # Maintainer: Ryan Bruno <ryan@rbruno.com>
 pkgname=base.ryan
 pkgver=0.0.18
-pkgrel=1
+pkgrel=5
 pkgdesc=''
 arch=('any')
 url='https://github.com/RyanBruno/TheRepository'
@@ -86,13 +86,18 @@ depends=(
     # X Fonts
     'noto-fonts'
     # GUI Applications
+    ## gimp
+    'gimp'
+    ## Audio
+    'pavucontrol'
     ## Web
     'firefox'
     ## Finance
     'gnucash'
     # Gotta have a SQL Server
-    'mariadb'
+    'mariadb' 'mysql-workbench' 'gnome-keyring'
     # Not Orginized
+    'pass'
     'syncthing'
     'tree'
     'htop'
