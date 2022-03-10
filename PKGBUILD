@@ -1,7 +1,7 @@
 # Maintainer: Ryan Bruno <ryan@rbruno.com>
 pkgname=base.ryan
 pkgver=0.0.18
-pkgrel=5
+pkgrel=6
 pkgdesc=''
 arch=('any')
 url='https://github.com/RyanBruno/TheRepository'

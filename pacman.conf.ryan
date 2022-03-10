@@ -76,7 +76,7 @@ LocalFileSigLevel = Optional
 [core.ryan]
 Server = http://origin/pkg/
 
-[consulting.ryan]
+[base.caterbuddy]
 Server = file:///var/lib/git/Consulting.git/dist
 
 [core]
