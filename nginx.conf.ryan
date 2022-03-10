@@ -10,21 +10,7 @@ events {
 
 http {
 	server {
-		server_name     cateradmin.rbruno.com;
-        listen		    80;
-        root            /usr/lib/caterbuddy-admin/frontend;
-
-        location /css {
-            default_type text/css;
-        }
-
-        location /api {
-            proxy_pass http://localhost:5000;
-        }
-    }
-
-	server {
-		#server_name	*;
+		server_name     _;
         listen		    80;
         listen          443 ssl;
 
@@ -53,7 +39,7 @@ http {
 
         location /pkg {
             rewrite ^/pkg/(.*) /$1    break;
-            root /var/lib/git/Public.git/pkg/dist;
+            root /var/lib/git/base.ryan.git/dist;
         }
 
         location /ipfs {
@@ -78,6 +64,21 @@ http {
             add_header Cache-Control "no-cache";
 	    }
 	}
+
+	server {
+		server_name     cateradmin.rbruno.com;
+        listen		    80;
+        root            /usr/lib/caterbuddy-admin/frontend;
+
+        location /css {
+            default_type text/css;
+        }
+
+        location /api {
+            proxy_pass http://localhost:5000;
+        }
+    }
+
 
     server {
         listen          80;
