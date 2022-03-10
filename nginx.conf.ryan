@@ -74,8 +74,9 @@ http {
             default_type text/css;
         }
 
-        location /api {
-            proxy_pass http://localhost:5000;
+        location /api/ {
+            proxy_set_header Host localhost;
+            proxy_pass http://localhost:5000/;
         }
     }
 
