@@ -51,6 +51,11 @@ http {
             proxy_pass  http://localhost:3000;
         }
 
+        location /caterbuddyapi {
+            rewrite ^/caterbuddyapi/(.*) /$1    break;
+            proxy_pass  http://localhost:5000;
+        }
+
         location /assets/MeatWagonBbq-Catering {
             rewrite ^/assets/MeatWagonBbq-Catering(.*) /$1    break;
             root /srv/MeatWagonBbq-Catering/assets;
@@ -68,6 +73,13 @@ http {
 	server {
 		server_name     cateradmin.rbruno.com;
         listen		    80;
+        listen          443 ssl;
+
+        ssl_certificate     /srv/certs/live/rbruno.com/fullchain.pem;
+        ssl_certificate_key /srv/certs/live/rbruno.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
         root            /usr/lib/caterbuddy-admin/frontend;
 
         location /css {
@@ -80,6 +92,30 @@ http {
         }
     }
 
+	server {
+		server_name     catercustomer.rbruno.com;
+        listen		    80;
+        listen          443 ssl;
+
+        ssl_certificate     /srv/certs/live/rbruno.com/fullchain.pem;
+        ssl_certificate_key /srv/certs/live/rbruno.com/privkey.pem;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         HIGH:!aNULL:!MD5;
+
+        root            /usr/lib/MeatWagonBbq-Catering/http;
+
+        location /caterbuddyapi {
+            rewrite ^/caterbuddyapi/(.*) /$1    break;
+            proxy_pass  http://localhost:5000;
+        }
+
+        location /assets/MeatWagonBbq-Catering {
+            rewrite ^/assets/MeatWagonBbq-Catering(.*) /$1    break;
+            root /srv/MeatWagonBbq-Catering/assets;
+            #add_header Surrogate-Control "no-cache";
+            #add_header Cache-Control "no-cache";
+        }
+    }
 
     server {
         listen          80;
