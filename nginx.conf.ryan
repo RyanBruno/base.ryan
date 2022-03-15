@@ -109,6 +109,13 @@ http {
             proxy_pass  http://localhost:5000;
         }
 
+        location /assets/caterbuddy {
+            rewrite ^/assets/caterbuddy(.*) /$1    break;
+            root /srv/http/assets;
+            #add_header Surrogate-Control "no-cache";
+            #add_header Cache-Control "no-cache";
+        }
+
         location /assets/MeatWagonBbq-Catering {
             rewrite ^/assets/MeatWagonBbq-Catering(.*) /$1    break;
             root /srv/MeatWagonBbq-Catering/assets;
