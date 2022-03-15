@@ -102,7 +102,7 @@ http {
         ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
         ssl_ciphers         HIGH:!aNULL:!MD5;
 
-        root            /usr/lib/MeatWagonBbq-Catering/http;
+        root            /usr/lib/caterbuddy-customer/frontend;
 
         location /caterbuddyapi {
             rewrite ^/caterbuddyapi/(.*) /$1    break;

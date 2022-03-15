@@ -1,13 +1,13 @@
 
 DEST=dist/
-VER=0.0.18-10
+VER=0.0.19-1
 #TEMP=/tmp/
 TEMP=/home/ryan/
 
 .PHONY: build dist
 
 build: PKGBUILD
-	@makepkg -s --skipinteg 1> /dev/null  || [ $$? -eq 13 ]
+	@makepkg -si --skipinteg 1> /dev/null  || [ $$? -eq 13 ]
 	@gpg -b --yes base.ryan-$(VER)-any.pkg.tar.zst
 
 dist:
