@@ -51,6 +51,10 @@ http {
             proxy_pass  http://localhost:3000;
         }
 
+        location /auth {
+            proxy_pass  http://localhost:5005;
+        }
+
         location /caterbuddyapi {
             rewrite ^/caterbuddyapi/(.*) /$1    break;
             proxy_pass  http://localhost:5000;
@@ -146,6 +150,10 @@ http {
 
         location /express {
             proxy_pass  http://localhost:3000;
+        }
+
+        location /auth {
+            proxy_pass  http://localhost:5005;
         }
 
         location /assets/MeatWagonBbq-Catering {
