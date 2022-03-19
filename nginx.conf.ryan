@@ -90,6 +90,10 @@ http {
             default_type text/css;
         }
 
+        location /auth {
+            proxy_pass  http://localhost:5005;
+        }
+
         location /api/ {
             proxy_set_header Host localhost;
             proxy_pass http://localhost:5500/;
@@ -111,6 +115,10 @@ http {
         location /caterbuddyapi {
             rewrite ^/caterbuddyapi/(.*) /$1    break;
             proxy_pass  http://localhost:5000;
+        }
+
+        location /auth {
+            proxy_pass  http://localhost:5005;
         }
 
         location /assets/caterbuddy {
@@ -150,10 +158,6 @@ http {
 
         location /express {
             proxy_pass  http://localhost:3000;
-        }
-
-        location /auth {
-            proxy_pass  http://localhost:5005;
         }
 
         location /assets/MeatWagonBbq-Catering {
