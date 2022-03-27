@@ -67,6 +67,20 @@ http {
             #add_header Cache-Control "no-cache";
         }
 
+        location /assets/mwb {
+            rewrite ^/assets(.*) /$1    break;
+            root /srv/caterbuddy/assets;
+        }
+
+        location /assets/mwbp1 {
+            rewrite ^/assets(.*) /$1    break;
+            root /srv/caterbuddy/assets;
+        }
+
+        location /catercustomer {
+            root /usr/lib/caterbuddycustomer;
+        }
+
         location /assets/caterbuddy {
             rewrite ^/assets/caterbuddy(.*) /$1    break;
             root /srv/http/assets;
@@ -105,6 +119,12 @@ http {
             proxy_set_header Host localhost;
             proxy_pass http://localhost:5500/;
         }
+
+        location /assets {
+            rewrite ^/assets(.*) /$1    break;
+            root /srv/caterbuddy/assets;
+        }
+
     }
 
 	server {
@@ -140,6 +160,11 @@ http {
             root /srv/MeatWagonBbq-Catering/assets;
             #add_header Surrogate-Control "no-cache";
             #add_header Cache-Control "no-cache";
+        }
+
+        location /assets {
+            rewrite ^/assets(.*) /$1    break;
+            root /srv/caterbuddy/assets;
         }
     }
 
