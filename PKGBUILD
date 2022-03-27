@@ -1,7 +1,7 @@
 # Maintainer: Ryan Bruno <ryan@rbruno.com>
 pkgname=base.ryan
 pkgver=0.0.19
-pkgrel=7
+pkgrel=8
 pkgdesc=''
 arch=('any')
 url='https://github.com/RyanBruno/TheRepository'
@@ -53,6 +53,7 @@ depends=(
     #'apache'
     ## Email
     'postfix'
+    'msmtp'
     'dovecot'
     ## Networking
     'wireguard-tools'
