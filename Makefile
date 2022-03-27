@@ -1,6 +1,6 @@
 
 DEST=dist/
-VER=0.0.19-9
+VER=0.0.19-10
 #TEMP=/tmp/
 TEMP=/home/ryan/
 

@@ -111,6 +111,11 @@ http {
             default_type text/css;
         }
 
+        location /caterbuddyapi {
+            rewrite ^/caterbuddyapi/(.*) /$1    break;
+            proxy_pass  http://localhost:5000;
+        }
+
         location /auth {
             proxy_pass  http://localhost:5005;
         }
