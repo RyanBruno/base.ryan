@@ -96,6 +96,7 @@ http {
 	    #}
 
         location /usr/ {
+            include    mime.types;
             alias /usr/lib/http/;
             #try_files $1 $1/;
         }
