@@ -41,7 +41,7 @@ http {
     }
     server {
         listen          80;
-        server_name	    catering.themeatwagonbbq.com;
+        server_name	    app.caterbuddyvip.com;
         return          301 https://app.caterbuddyvip.com$request_uri;
     }
 
